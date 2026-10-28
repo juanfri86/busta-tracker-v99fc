@@ -188,40 +188,26 @@ File: \${s}
             if(inputs.length>0){
               var dt = new DataTransfer();
               dt.items.add(file);
-              inputs[0].files = dt.files;
-              inputs[0].dispatchEvent(new Event('change', {bubbles:true}));
-              btn.textContent='✓ Ripristinato!';
-              setTimeout(function(){ try{btn.remove();}catch(e){} },2000);
-            }
-          }catch(e){}
-        };
-        document.body.appendChild(btn);
-      }
-    },2000);
-  });
-
-  window.pulisciMemoriaV10 = function(){ window.__v10_mem=null; window.__v10_lastName=null; alert('Memoria sessione pulita'); location.reload(); };
-  window.esportaMemoriaV10 = function(){
-    if(!window.__v10_mem){ alert('Nessun backup in memoria'); return; }
-    var blob = new Blob([window.__v10_mem], {type:'application/json'});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url; a.download = window.__v10_lastName || 'backup_memoria.json';
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-  };
-  window.copiaMemoriaV10 = function(){
-    if(!window.__v10_mem){ alert('Nessun backup'); return; }
-    var ta = document.createElement('textarea');
-    ta.value = window.__v10_mem; ta.style.position='fixed'; ta.style.opacity='0';
-    document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); alert('Copiato negli appunti'); }catch(e){ alert('Seleziona e copia manualmente'); }
-    ta.remove();
-  };
+              <script id="v10-final-permanente">
+(function(){
+  const KEY='busta_v99_final_187h_permanente';
+  document.addEventListener('change',function(e){
+    if(e.target.type==='file'&&e.target.files[0]&&e.target.files[0].name.endsWith('.json')){
+      const r=new FileReader();
+      r.onload=function(ev){try{localStorage.setItem(KEY,ev.target.result);localStorage.setItem(KEY+'_name',e.target.files[0].name);}catch{}};
+      r.readAsText(e.target.files[0]);
+    }
+  },true);
+  function restore(){
+    const s=localStorage.getItem(KEY);if(!s)return;
+    const t=document.body.innerText||'';
+    if(t.includes('Nessuna fabbrica')||t.includes('Nessun dato')||t.includes('Benvenuto!')){
+      const b=new Blob([s],{type:'application/json'});
+      const f=new File([b],'memoria.json',{type:'application/json'});
+      const i=document.querySelector('input[type=file]');
+      if(i){const d=new DataTransfer();d.items.add(f);i.files=d.files;i.dispatchEvent(new Event('change',{bubbles:true}));}
+    }
+  }
+  window.addEventListener('load',()=>{setTimeout(restore,1500);setTimeout(restore,3500);});
 })();
-<\/script>
-`;function $i(){let[e,t]=sn.useState(""),n=sn.useMemo(()=>{if(!Lt)return"";if(Lt.includes("</body>")){let r=Lt.lastIndexOf("</body>");return Lt.slice(0,r)+Ic+Lt.slice(r)}return Lt+Ic},[]);return sn.useEffect(()=>{let r=(l)=>{if(l.data&&l.data.type==="V10_MEM_SAVED")t("Memoria sessione: "+l.data.name),setTimeout(()=>t(""),3500)};return window.addEventListener("message",r),()=>window.removeEventListener("message",r)},[]),ft("div",{className:"w-full min-h-screen bg-[var(--bg)] text-[var(--fg)] overflow-x-clip",style:{paddingTop:"var(--safe-area-inset-top)",boxSizing:"border-box"},children:_i("div",{className:"w-full relative",style:{height:"calc(100vh - var(--safe-area-inset-top))"},children:[ft("iframe",{title:"V10 Safe - Original Exacto + Memoria Sin Romper Formato",srcDoc:n,className:"w-full h-full border-0 block bg-white",sandbox:"allow-scripts allow-same-origin allow-forms allow-downloads allow-popups"}),e&&ft("div",{className:"absolute top-3 left-1/2 -translate-x-1/2 z-50 bg-[var(--card)] border border-[var(--border)] text-[var(--fg)] px-3 py-1.5 rounded-full text-xs font-medium shadow-lg pointer-events-none",children:e})]})})}Qc.createRoot(document.getElementById("root")).render(ft(Mc.default.StrictMode,{children:ft($i,{})}));
 </script>
-  <script>(function(){function m(a){var h=a.getAttribute("href");if(!h)return;try{var u=new URL(h,document.baseURI);if(((u.protocol==="http:"||u.protocol==="https:")&&u.host!==location.host)||u.protocol==="mailto:"||u.protocol==="tel:"||u.protocol==="sms:"){a.target="_blank";a.rel="noopener noreferrer";}}catch(e){}}function s(){document.querySelectorAll("a[href]").forEach(m);}if(document.readyState!=="loading"){s();}else{document.addEventListener("DOMContentLoaded",s);}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(a){m(a);}},true);})();</script>
-  <script type="application/json" data-clippy-inline-media-manifest="1">{"version":1,"slots":[]}</script>
-</body>
-</html>
